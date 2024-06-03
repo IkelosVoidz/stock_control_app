@@ -6,10 +6,10 @@
     <title>StockControl</title>
 </head>
 <body>
-    Before
-    <br>
-    <%- body %>
-    <br>
-    After
+    <%- include('../partials/header') %>
+    <%- include('../partials/sidebar') %>
+    <%- include('../partials/errorMessage') %>
+    <%- body %> <!-- Each different view will go here -->
+    <%- include('../partials/footer'); -%>
 </body>
 </html>
