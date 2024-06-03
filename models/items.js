@@ -7,24 +7,15 @@ const itemSchema = new mongoose.Schema({
         minLength: 1,
         maxLength: 100,
       },
-      /*brand: {
-        type: String,
-        required: true,
-        minLength: 1,
-      },
       description: {
         type: String,
-        required: true,
         minLength: 1,
         maxLength: 300,
       },
-      /*category: { //TODO : hacer todo lo de la categoria si da tiempo
-        type: Schema.Types.ObjectId,
-        ref: 'Category',
+      brand: { 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Brands',
         required: true,
-      },
-      size: {
-        type: String,
       },
       price: {
         type: Number,
@@ -35,7 +26,7 @@ const itemSchema = new mongoose.Schema({
         type: Number,
         required: true,
         min: 0,
-      },*/
+      }
 })
 
 module.exports = mongoose.model('Items', itemSchema)

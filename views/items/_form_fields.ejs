@@ -1,2 +1,29 @@
-<label> Name</label>
-<input type="text" name="name" value="<%=item.name%>">
+<div>
+    <label> Name</label>
+    <input type="text" name="name" value="<%=item.name%>">
+</div>
+<div>
+    <label> Brand</label>
+    <select name="brand">
+        <option value="">Please select a Brand</option>
+        <% brands.forEach(brand =>{ %>
+            <% if(brand.id === item.brand){ %>
+                <option selected label="<%=brand.name %>" value="<%=brand.id %>">      
+            <%} else { %>
+                <option label="<%=brand.name %>" value="<%=brand.id %>">      
+            <% } %>
+        <%}) %>
+    </select>
+</div>
+<div>
+    <label> Description </label>
+    <textarea name="description"><%=item.description%></textarea>
+</div>
+<div>
+    <label> Price </label>
+    <input type="number" min="1" name="price" value="<%=item.price%>">
+</div>
+<div>
+    <label> Stock </label>
+    <input type="number" min="0" name="stock" value="<%=item.num_in_stock%>">
+</div>

@@ -1,10 +1,39 @@
 <h2> Search Items </h2>
 <form action="/items" method="GET">
-    <label> Name </label>
-    <input type="text" name="name" value="<%= searchOptions.name %>">
+   <div>
+     <label> Name </label>
+     <input type="text" name="name" value="<%= searchOptions.name %>">
+   </div>
+   <div>
+    <label> Brand </label>
+    <select name="brand">
+        <% if(searchOptions.brand === 'all'){ %>
+            <option selected label="All" value="all">
+        <%} else { %>  
+            <option label="All" value="all">
+        <% } %>     
+        <% brands.forEach(brand =>{ %>
+            <% if(brand.id === searchOptions.brand){ %>
+                <option selected label="<%=brand.name %>" value="<%=brand.id %>">      
+            <%} else { %>
+                <option label="<%=brand.name %>" value="<%=brand.id %>">      
+            <% } %>
+        <%}) %>
+    </select>
+  </div>
     <button tupe="submit"> Search </button>
 </form>
 <br>
-<% items.forEach(item => {%>
-    <div> <%=item.name  %></div>
-<% }) %>
+<div>
+    <% items.forEach(item => {%>
+        <div> 
+                <strong>Name:</strong> <%= item.name %> <br>
+                <% 
+                    const brand = brands.find(b => b._id.toString() === item.brand.toString());
+                %>
+                <strong>Brand:</strong> <%= brand ? brand.name : 'Unknown Brand' %><br>
+                <strong>Number in Stock:</strong> <%= item.num_in_stock %>
+        </div>
+        <br>
+    <% }) %>                           
+</div>
