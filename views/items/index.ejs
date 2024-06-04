@@ -34,6 +34,7 @@
                 <strong>Brand:</strong> <%= brand ? brand.name : 'Unknown Brand' %><br>
                 <strong>Number in Stock:</strong> <%= item.num_in_stock %>
         </div>
+        <a href="/items/<%= item.id %>"> Details </a>
         <br>
     <% }) %>                           
 </div>

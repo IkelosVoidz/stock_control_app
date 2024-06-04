@@ -40,7 +40,6 @@ router.post('/' , async (req,res) =>{
 
     try{
         const newBrand = await brand.save()
-        //res.redirect(`/brands/${newBrand.id}`) 
         res.redirect('brands'); 
     }  
     catch{
@@ -70,7 +69,6 @@ router.put('/:id', async (req,res)=>{
             {
                 name: req.body.name
             }) //get the brand
-        //res.redirect(`/brands/${brand.id}`) 
         res.redirect('/brands'); 
     }  
     catch(error){

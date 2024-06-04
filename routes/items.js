@@ -16,7 +16,6 @@ router.get('/', async (req,res) => {
         query = query.where('brand').equals(req.query.brand);
     }
 
-
     try {
         //get all brands
         const items = await query.exec()
@@ -35,7 +34,7 @@ router.get('/', async (req,res) => {
 //new item route
 
 router.get('/new' , async (req,res) =>{
-    renderNewPage(res, new Item())
+    renderFormPage(res,  new Item(), 'new')
 })
 
 
@@ -50,24 +49,104 @@ router.post('/' , async (req,res) =>{
     })
   try {
     const newItem = await item.save()
-    //res.redirect(`items/${newItem.id}`) 
-    res.redirect('items'); 
+    res.redirect(`items/${newItem.id}`) 
   } catch{
-    renderNewPage(res, item , true)
+    renderFormPage(res ,item ,'new', true)
   }
 })
-module.exports = router
 
-async function renderNewPage(res, item, hasError = false) {
+
+async function renderFormPage(res, item, form,  hasError = false) {
     try {
         const brands = await Brand.find({})
         const params = {
             brands: brands,
             item: item
         }
-        if(hasError) params.errorMessage = 'Error Creating Item'
-        res.render("items/new",params)
+        if(hasError){
+            if(form === 'edit'){
+                params.errorMessage = 'Error Updating Item'
+            }
+            else {
+                params.errorMessage = 'Error Creating Item'
+            }
+        } 
+        res.render(`items/${form}`,params)
     } catch {
         res.redirect('/items')
     }
 }
+
+//item detail
+router.get('/:id', async(req,res) =>{
+    try {
+        const item = await Item.findById(req.params.id)
+                                .populate('brand')
+                                .exec()
+        res.render('items/show' , {item:item})
+    } catch(err) {
+        console.log(err)
+        res.redirect('/')
+    }
+})
+
+//edit item route
+
+router.get('/:id/edit' , async (req,res) =>{
+   
+    try { 
+        const item = await Item.findById(req.params.id)
+        renderFormPage(res,item , 'edit')
+    }catch (error) {
+        res.redirect('/')
+    }
+   
+})
+
+//update item route
+router.put('/:id' , async (req,res) =>{
+    let item 
+  try {
+
+    item = await Item.findByIdAndUpdate(req.params.id, 
+        {
+            name: req.body.name,
+            description: req.body.description,
+            brand: req.body.brand,
+            price: req.body.price,
+            num_in_stock: req.body.stock
+        }) 
+
+    
+    res.redirect(`items/${item.id}`) 
+  } catch{
+
+    if(item != null){
+        renderFormPage(res ,item ,'edit', true)
+    }
+    else{
+        redirectr('/')
+    }
+  }
+})
+
+//delete item page
+router.delete('/:id' , async(req,res)=>{
+    let item
+    try{
+        item = await Item.findByIdAndDelete(req.params.id)
+        res.redirect('/items')
+    }catch{
+        if(item != null){
+            res.render('items/show', {
+                item : item,
+                errorMessage: 'Could not delete Item'
+            })
+        }
+        else{
+            res.redirect('/')
+        }
+    }
+})
+
+module.exports = router

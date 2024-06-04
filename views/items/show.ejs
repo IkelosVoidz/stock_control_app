@@ -1,0 +1,17 @@
+<h2> <%= item.name %></h2>
+<section>
+    <h3>Details</h3>
+    <div> 
+        <strong>Description:</strong> <%= item.description %><br>
+        <strong>Brand:</strong> <%= item ? item.brand.name : 'Unknown Brand' %><br>
+        <strong>Price:</strong> <%= item.price %><br>
+        <strong>Number in Stock:</strong> <%= item.num_in_stock %><br>
+    </div>
+</section>
+<section>
+    <h3>Options:</h3>
+    <div>
+        <a href="/items/<%=item.id%>/edit">Edit</a>
+        <%-include('../partials/deleteForm', {url: `/items/${item.id}`})%>
+    </div>
+</section>
