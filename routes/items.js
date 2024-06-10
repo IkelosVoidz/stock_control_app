@@ -77,7 +77,7 @@ async function renderFormPage(res, item, form,  hasError = false) {
     }
 }
 
-//item detail
+//item read/deta
 router.get('/:id', async(req,res) =>{
     try {
         const item = await Item.findById(req.params.id)
@@ -118,14 +118,14 @@ router.put('/:id' , async (req,res) =>{
         }) 
 
     
-    res.redirect(`items/${item.id}`) 
-  } catch{
-
+    res.redirect(`/items/${item.id}`) 
+  } catch(err){
+    console.log(err)
     if(item != null){
         renderFormPage(res ,item ,'edit', true)
     }
     else{
-        redirectr('/')
+        res.redirect('/')
     }
   }
 })

@@ -11,22 +11,6 @@ const brandSchema = new mongoose.Schema({
 })
 
 
-
-  
-  
-
-  /*console.log("estoy llegando guarro")
-  try {
-      const items = await Item.find({ brand: this._id });
-      if (items.length > 0) {
-          next(new Error('This brand has associated items and cannot be deleted.'));
-      } else {
-          next();
-      }
-  } catch (error) {
-      next(error);
-  }*/
-
 // Apply the middleware to both deleteOne and findByIdAndDelete
 brandSchema.pre('findOneAndDelete',{ query: true, document: false }, function (next) {
 

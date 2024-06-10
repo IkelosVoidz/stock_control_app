@@ -7,7 +7,7 @@
     <select name="brand">
         <option value="">Please select a Brand</option>
         <% brands.forEach(brand =>{ %>
-            <% if(brand.id === item.brand){ %>
+            <% if(item.brand && brand.id.toString() === item.brand.toString()){ %>
                 <option selected label="<%=brand.name %>" value="<%=brand.id %>">      
             <%} else { %>
                 <option label="<%=brand.name %>" value="<%=brand.id %>">      
